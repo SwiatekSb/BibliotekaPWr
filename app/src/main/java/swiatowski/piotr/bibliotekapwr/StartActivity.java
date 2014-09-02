@@ -1,18 +1,60 @@
 package swiatowski.piotr.bibliotekapwr;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.inject.Inject;
+
+import roboguice.activity.RoboActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
 
-public class StartActivity extends Activity {
+@ContentView(R.layout.activity_start)
+public class StartActivity extends RoboActivity {
+
+    @InjectView(R.id.editText)
+    private EditText mEtPhrase;
+    @InjectView(R.id.button)
+    private Button mBtnSearch;
+
+    @Inject
+    private ParseURL mParser;
+
+    private String mPhrase;
+
+    private void setUpView() {
+
+    }
+
+    private void setUpListeners() {
+        mBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //search mPhrase
+                mPhrase = mEtPhrase.getText().toString();
+                mParser.execute(new String[]{mPhrase});
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+
+        setUpView();
+        setUpListeners();
+
     }
+
 
 
     @Override

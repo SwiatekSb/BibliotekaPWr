@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 20
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         applicationId "swiatowski.piotr.bibliotekapwr"
@@ -21,4 +21,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'org.roboguice:roboguice:2.0'
+    compile 'com.google.guava:guava:16.0.+'
+    compile 'com.squareup:otto:1.3.+'
+    compile 'org.jsoup:jsoup:1.7.2'
+
 }
