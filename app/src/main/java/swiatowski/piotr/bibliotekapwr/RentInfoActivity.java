@@ -33,16 +33,12 @@ import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 @ContentView(R.layout.activity_rent_info)
 public class RentInfoActivity extends RoboActivity {
 
-
     @InjectView(R.id.btnNavigate)
     private Button mBtnNavigate;
-
     @InjectView(R.id.txtvRentTitle)
     private TextView mTitle;
-
     @InjectView(R.id.txtvLibraryName)
     private TextView mLibraryName;
-
     @InjectView(R.id.lvRentBooks)
     private ListView mLvBooks;
 
@@ -60,13 +56,10 @@ public class RentInfoActivity extends RoboActivity {
     private ParseURL mParser;
 
     private void getData() {
-        Log.d("doszlo", "getData");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mBookRow = (BookRow) extras.getSerializable("book");
-            selected = extras.getString("selected");
-            Log.d("doszlo", "book " + mBookRow + "    sel " + selected + "");
-
+            mBookRow = (BookRow) extras.getSerializable(BundleConstants.BOOK_ROW);
+            selected = extras.getString(BundleConstants.SELECTED_ROW);
         }
     }
 
@@ -125,8 +118,6 @@ public class RentInfoActivity extends RoboActivity {
             try {
                 publishProgress("Loading book rent info");
                 mListRent = mParser.parseUrlRent(mLibraryBook.getInfoBookHref());
-//                mPage = mParser.parseUrl(strings);
-//                mBooks.addAll(mPage.getBookList());
             } catch (Throwable t) {
                 mProgressDialog.dismiss();
                 t.printStackTrace();

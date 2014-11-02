@@ -6,24 +6,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +28,7 @@ import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
 /**
  * Created by Piotrek on 2014-11-01.
+ *
  */
 @ContentView(R.layout.activity_book_list)
 public class BookListActivity extends RoboActivity {
@@ -57,34 +50,19 @@ public class BookListActivity extends RoboActivity {
 
     private Page mPage;
 
-    //get param to parse html
-    //parse html
-
-    //get all rekord and add to book list
-
-
-    //settList
-
     private void getBundle() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mSearchWord = extras.getString("SEARCH_VALUE");
-            Log.d("doszlo", "pokaz value   "  + mSearchWord);
+            mSearchWord = extras.getString(BundleConstants.SEARCH_VALUE);
         }
     }
 
     private void getBooks() {
         String search = HtmlConstants.SEARCH_URL + mSearchWord;
-        Log.d("doszlo", " urrl  "  + search);
         new LoadBooks().execute(new String[]{search});
-
-
     }
 
-
-
     private class LoadBooks extends AsyncTask<String, String, Void> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -121,22 +99,15 @@ public class BookListActivity extends RoboActivity {
     }
 
     private void updateList() {
-        Log.d("doszlo", mBooks.size() + "   rozmiarr");
         mBookAdapter.refill(mBooks);
     }
 
-
     private void setUpView() {
-
-
         mBooks = new ArrayList<BookRow>();
-
-
         mBookAdapter = new BookAdapter(this,
                 R.layout.row_book_information, mBooks);
         mBookList.setAdapter(mBookAdapter);
         mProgressDialog = new ProgressDialog(BookListActivity.this);
-
     }
 
     @Override
@@ -155,25 +126,9 @@ public class BookListActivity extends RoboActivity {
         mBtnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPage.isNextPage()){
+                if (mPage.isNextPage()) {
                     new LoadBooks().execute(new String[]{mPage.getNextPage()});
                 }
-            }
-        });
-
-
-        mBookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-//                mBooks.get(position);
-//                Log.d("doszlo",  position + "  position");
-//                LinearLayout ll = (LinearLayout) view;
-//                Log.d("doszlo",  view.toString() + "  position");
-//                Spinner sp = (Spinner) ll.findViewById(R.id.spBookPLace);
-//                Log.d("doszlo",  sp.getSelectedItem() + "  position");
-//
-////               String text = sp.getSelectedItem().toString();
-////               Log.d("doszlo", "spinner text  " + text);
             }
         });
     }
@@ -182,12 +137,11 @@ public class BookListActivity extends RoboActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpView();
-        //get Books
+
         getBundle();
         getBooks();
 
-       // setUpView();
-      setUpListeners();
+        setUpListeners();
     }
 
     /**
@@ -196,15 +150,15 @@ public class BookListActivity extends RoboActivity {
     private static class BookAdapter extends ArrayAdapter<BookRow> {
 
         private Activity mContext;
-        private List<BookRow> mRestaurants;
+        private List<BookRow> mBookRowList;
         private int mLayoutResourceId;
         private Handler uiHandler = new Handler();
 
         public BookAdapter(Activity context, int layoutResourceId,
-                                 List<BookRow> restaurants) {
-            super(context, layoutResourceId, restaurants);
+                           List<BookRow> bookRowList) {
+            super(context, layoutResourceId, bookRowList);
             mContext = context;
-            mRestaurants = new ArrayList<BookRow>();
+            mBookRowList = new ArrayList<BookRow>();
             mLayoutResourceId = layoutResourceId;
         }
 
@@ -239,48 +193,41 @@ public class BookListActivity extends RoboActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            final BookRow bookROw = mRestaurants.get(position);
-            String[] names = bookROw.getListOfLibraryName();
+            final BookRow bookRow = mBookRowList.get(position);
+            String[] names = bookRow.getListOfLibraryName();
 
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, names); //selected item will look like a spinner set from XML
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             viewHolder.mSpLibrary.setAdapter(spinnerArrayAdapter);
 
-            //String text = spinner.getSelectedItem().toString();
-            final Intent intent = new Intent(mContext, BookInfoActivity.class);
-            intent.putExtra("BookRow", bookROw);
-
-            viewHolder.mTxtvTitle.setText(bookROw.getTitle() + "");
+            viewHolder.mTxtvTitle.setText(bookRow.getTitle() + "");
             viewHolder.mTxtvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //load more
-                    mContext.startActivity(intent);
+                    Intent bookInfoActivity = new Intent(mContext, BookInfoActivity.class);
+                    bookInfoActivity.putExtra(BundleConstants.BOOK_ROW, bookRow);
+                    mContext.startActivity(bookInfoActivity);
                 }
             });
-            final Intent intent2 = new Intent(mContext, RentInfoActivity.class);
 
             viewHolder.mBtnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    intent2.putExtra("selected", viewHolder.mSpLibrary.getSelectedItem().toString());
-                    intent2.putExtra("book", bookROw);
-                    Log.d("doszlo", "book " + bookROw + "    sel " + viewHolder.mSpLibrary.getSelectedItem().toString() + "");
-                    mContext.startActivity(intent2);
+                    Intent rentInfoActivity = new Intent(mContext, RentInfoActivity.class);
+                    rentInfoActivity.putExtra(BundleConstants.SELECTED_ROW, viewHolder.mSpLibrary.getSelectedItem().toString());
+                    rentInfoActivity.putExtra(BundleConstants.BOOK_ROW, bookRow);
+                    mContext.startActivity(rentInfoActivity);
                 }
             });
 
-            viewHolder.mTxtvAuthor.setText(bookROw.getAuthor() + "");
-            viewHolder.mTxtvYear.setText(bookROw.getYear() + "");
+            viewHolder.mTxtvAuthor.setText(bookRow.getAuthor() + "");
+            viewHolder.mTxtvYear.setText(bookRow.getYear() + "");
 
             return convertView;
         }
 
-        // create method refill to notyfiydatachange
         public void refill(List<BookRow> lists) {
-//            mRestaurants.clear();
-            mRestaurants.addAll(lists);
-            Log.d("doszlo", lists.size() + "   w refil");
+            mBookRowList.addAll(lists);
             uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -289,4 +236,5 @@ public class BookListActivity extends RoboActivity {
             });
         }
     }
+
 }

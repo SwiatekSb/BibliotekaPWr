@@ -20,22 +20,16 @@ public class BookInfoActivity extends RoboActivity {
 
     @InjectView(R.id.txtvInfoDocumentType)
     private TextView mTxtvDocumentType;
-
     @InjectView(R.id.txtvInfoAuthor)
     private TextView mTxtvAuthor;
-
     @InjectView(R.id.txtvInfoInstituteName)
     private TextView mTxtvInstituteName;
-
     @InjectView(R.id.txtvInfoTitle)
     private TextView mTxtvTitle;
-
     @InjectView(R.id.txtvInfoPublishing)
     private TextView mTxtvPublishing;
-
     @InjectView(R.id.txtvInfoISBN)
     private TextView mTxtvISBN;
-
 
     @Inject
     private ParseURL mParser;
@@ -45,13 +39,14 @@ public class BookInfoActivity extends RoboActivity {
     private void getData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mBookRow = (BookRow) extras.getSerializable("BookRow");
+            mBookRow = (BookRow) extras.getSerializable(BundleConstants.BOOK_ROW);
         }
     }
 
     private class LoadInfoBooks extends AsyncTask<String, String, Void> {
 
         private BookRow book;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -63,7 +58,7 @@ public class BookInfoActivity extends RoboActivity {
         protected Void doInBackground(String... strings) {
             try {
                 publishProgress("Loading info books");
-               book = mParser.parseUrlInfo(mBookRow.getInfoHref());
+                book = mParser.parseUrlInfo(mBookRow.getInfoHref());
 //                mPage = mParser.parseUrl(strings);
 //                mBooks.addAll(mPage.getBookList());
             } catch (Throwable t) {
@@ -120,9 +115,6 @@ public class BookInfoActivity extends RoboActivity {
         } else {
             updateView();
         }
-
-
-
     }
 
 }
