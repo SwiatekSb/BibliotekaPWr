@@ -5,5 +5,6 @@ package swiatowski.piotr.bibliotekapwr.parserHTML;
  */
 public class HtmlConstants {
 
-    public static final String URL = "http://aleph.bg.pwr.wroc.pl/F/?func=find-b&request=";
+    public static final String ALEPH_URL = "http://aleph.bg.pwr.wroc.pl";
+    public static final String SEARCH_URL = "/F/?func=find-b&request=";
 }

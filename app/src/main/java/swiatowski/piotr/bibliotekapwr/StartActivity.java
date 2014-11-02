@@ -41,7 +41,7 @@ public class StartActivity extends RoboActivity {
             public void onClick(View view) {
                 //search mPhrase
                 mPhrase = mEtPhrase.getText().toString();
-                mParser.execute(new String[]{mPhrase});
+             //   mParser.execute(new String[]{mPhrase});
             }
         });
     }
