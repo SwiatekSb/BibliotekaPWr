@@ -38,6 +38,7 @@ public class MainActivity extends RoboActivity {
             @Override
             public void onClick(View view) {
                 Intent isbnActivity = new Intent(getApplicationContext(), ISBNActivity.class);
+
                 startActivity(isbnActivity);
             }
         });
@@ -45,13 +46,16 @@ public class MainActivity extends RoboActivity {
         mBtnInformationActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
             }
         });
+
 
         mBtnMyBooksActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intentMyBookActivity = new Intent(getApplicationContext(), MyBookActivity.class);
+                startActivity(intentMyBookActivity);
             }
         });
     }

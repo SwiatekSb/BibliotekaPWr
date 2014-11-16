@@ -23,9 +23,8 @@ public class ParseURL  {
 
     public List<Rent> parseUrlRent(String infoBookHref) {
         List<Rent> rentList = new ArrayList<Rent>();
-        try{
-            Document doc  = Jsoup.connect(HtmlConstants.ALEPH_URL + infoBookHref).get();
-
+        try {
+            Document doc = Jsoup.connect(HtmlConstants.ALEPH_URL + infoBookHref).get();
             Elements line = doc.select("td[class=td1]");
 
             int i = 0;
@@ -38,29 +37,26 @@ public class ParseURL  {
 
             for (Element l : line) {
 
-                if (i == m +2) {
+                if (i == m + 2) {
                     href = getText(l);
                     if (!href.equals("")) {
                         href = getInfoHrefLower(l);
                     }
-                    //  href = getInfoHrefLower(l);
-
                 }
                 if (i == m + 4) {
                     status = getText(l);
                 }
-                if ( i == m + 5) {
+                if (i == m + 5) {
                     data = getText(l);
                 }
-                if ( i == m + 8) {
+                if (i == m + 8) {
                     signature = getText(l);
 
-                    Log.d("doszlo", " rentt  " + href + "  " + status + "  "  + data + "  " + signature + "");
-                    rentList.add(new Rent(signature,status,data,href));
+                    rentList.add(new Rent(signature, status, data, href));
                     href = "";
                     m += 7;
                 }
-              i++;
+                i++;
             }
         } catch (Throwable t) {
             t.printStackTrace();
@@ -70,26 +66,22 @@ public class ParseURL  {
     }
 
     public BookRow parseUrlInfo(String string) {
-
         String type = "";
         String institute = "";
         String title = "";
         String year = "";
         String isbn = "";
 
-        try{
-            Document doc  = Jsoup.connect(HtmlConstants.ALEPH_URL + string).get();
+        try {
+            Document doc = Jsoup.connect(HtmlConstants.ALEPH_URL + string).get();
 
             Elements line = doc.select("td[class=td1]");
             type = getText(line.get(1));
-
-
-
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
-        return new BookRow(type,institute,title,year,isbn);
+        return new BookRow(type, institute, title, year, isbn);
     }
 
     public Page parseUrl(String... strings) {
@@ -98,55 +90,44 @@ public class ParseURL  {
         boolean ne = false;
         String previousPage = "";
         boolean prev = false;
-        try{
-            Document doc  = Jsoup.connect(HtmlConstants.ALEPH_URL + strings[0]).get();
 
-            String title = doc.title();
-
-            //get all row with book information
+        try {
+            Document doc = Jsoup.connect(HtmlConstants.ALEPH_URL + strings[0]).get();
             Elements line = doc.select("tr[valign=baseline]");
 
             for (Element e : line) {
-                // e - yeach row with book data
-               Elements td = e.getElementsByTag("td"); // 7 elementow
-               String href = getInfoHref(td.get(0)); // get Link infoHref
-               String author = getText(td.get(2)); // getAuthor
-               String titleBook= getText(td.get(3)); // getTtitle
-               String year = getText(td.get(4)); // getYear
-               List<LibraryBook> libraryBookList = getLibraryInfo(td.get(5)); // getLibarrayLINk and text ( text podziele)
-
-               boooks.add(new BookRow(href, author,titleBook,year,libraryBookList));
-
-
+                boooks.add(getBookRowData(e));
             }
 
-            //getNExt and Previous
-
-            Log.d("doszloP", "try");
             Elements previous = doc.select("a[title=Previous]");
-
             if (previous.size() > 0) {
-                 previousPage = getHrefLower(previous.first());
-                 prev = true;
-                Log.d("doszloP", previousPage);
-            } else {
-                Log.d("doszloP"," ooooooooooo");
+                previousPage = getHrefLower(previous.first());
+                prev = true;
             }
-
             Elements next = doc.select("a[title=Next]");
             if (next.size() > 0) {
-                 nextPage = getHrefLower(next.first());
+                nextPage = getHrefLower(next.first());
                 ne = true;
-                Log.d("doszloP", nextPage);
-            } else {
-                Log.d("doszloP"," next no");
             }
-
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
+        Log.d("doszlo", "next= " + nextPage + "  " + ne + "    pre " + previousPage + "  " + prev);
+
         return new Page(boooks, nextPage, previousPage, prev, ne);
+    }
+
+    private BookRow getBookRowData(Element e) {
+
+        Elements td = e.getElementsByTag("td");
+        String href = getInfoHref(td.get(0));
+        String author = getText(td.get(2));
+        String titleBook = getText(td.get(3));
+        String year = getText(td.get(4));
+        List<LibraryBook> libraryBookList = getLibraryInfo(td.get(5));
+
+        return new BookRow(href, author, titleBook, year, libraryBookList);
     }
 
     private List<LibraryBook> getLibraryInfo(Element element) {
@@ -175,6 +156,7 @@ public class ParseURL  {
         }
         return "";
     }
+
     private String getHrefLower(Element element) {
         if (element.hasAttr("href")) {
             return element.attr("href");
@@ -185,7 +167,5 @@ public class ParseURL  {
     private String getText(Element element) {
         return element.text();
     }
-
-
 
 }

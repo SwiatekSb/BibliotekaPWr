@@ -2,6 +2,7 @@ package swiatowski.piotr.bibliotekapwr.parserHTML;
 
 /**
  * Created by Piotrek on 2014-09-02.
+ *
  */
 public class HtmlConstants {
 

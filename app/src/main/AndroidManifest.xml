@@ -3,12 +3,30 @@
     package="swiatowski.piotr.bibliotekapwr" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <receiver android:name=".services.ConnectivityChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".widget.MyWidgetProvider" >
+            <intent-filter >
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/search_widget" />
+        </receiver>
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name" >
@@ -25,6 +43,11 @@
         <activity android:name=".ISBNActivity" />
         <activity android:name=".RentInfoActivity" />
         <activity android:name=".BookInfoActivity" />
+        <activity android:name=".RentActivity" />
+        <activity android:name=".MyBookActivity" />
+        <activity android:name=".NotificationListActivity" />
+        <activity android:name=".LibraryInfoActivity" />
+        <activity android:name=".LibraryListActivity" />
 
     </application>
 

@@ -14,6 +14,7 @@ import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
 /**
  * Created by Piotrek on 2014-11-02.
+ *
  */
 @ContentView(R.layout.activity_book_info)
 public class BookInfoActivity extends RoboActivity {

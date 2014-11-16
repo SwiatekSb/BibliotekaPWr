@@ -1,7 +1,9 @@
 package swiatowski.piotr.bibliotekapwr;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,24 +13,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.db.NotificationDataSource;
+import swiatowski.piotr.bibliotekapwr.db.entity.NotificationEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
 /**
  * Created by Piotrek on 2014-11-02.
+ *
  */
 @ContentView(R.layout.activity_rent_info)
 public class RentInfoActivity extends RoboActivity {
@@ -41,6 +45,9 @@ public class RentInfoActivity extends RoboActivity {
     private TextView mLibraryName;
     @InjectView(R.id.lvRentBooks)
     private ListView mLvBooks;
+
+    @Inject
+    private NotificationDataSource notificationDataSource;
 
     private BookRow mBookRow;
     private String selected;
@@ -144,6 +151,79 @@ public class RentInfoActivity extends RoboActivity {
         mRentAdapter = new RentAdapter(this,
                 R.layout.row_rent_book, mListRent);
         mLvBooks.setAdapter(mRentAdapter);
+
+        final Intent rentBookIntent = new Intent(this, RentActivity.class);
+        mLvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String linkToRent = mListRent.get(i).getHref();
+
+                if (!linkToRent.equals("")) {
+                    rentBookIntent.putExtra(BundleConstants.RENT_URL, linkToRent);
+                    startActivity(rentBookIntent);
+                } else {
+                    //TODO podzial na typ
+                    alert("Ksiazka niedostepna");
+                    alertNotification("Powiadomienie", linkToRent, i);
+
+                }
+            }
+        });
+    }
+
+    public void alertNotification(String title, final String linkToRent, final int i) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(RentInfoActivity.this);
+
+        dialogBuilder.setTitle(title);
+        dialogBuilder.setMessage("Czy chcesz ustawić powiadomienie ?");
+        dialogBuilder.setNegativeButton("Ustaw", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            notificationDataSource.insert(new NotificationEntity(mListRent.get(i).getSignature(),mBookRow.getInfoHref(),linkToRent, mBookRow.getTitle()));
+            dialog.dismiss();
+            }
+        });
+        dialogBuilder.setPositiveButton("Cofnij", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        showAlertDialog(dialogBuilder);
+
+    }
+
+    public void alert(String title) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(RentInfoActivity.this);
+
+
+        dialogBuilder.setTitle(title);
+        dialogBuilder.setMessage("Czy chcesz dodać ksiazke do ulubionych ?");
+        dialogBuilder.setNegativeButton("Dodaj", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //add book to database
+
+            }
+        });
+        dialogBuilder.setPositiveButton("Cofnij", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        showAlertDialog(dialogBuilder);
+
+    }
+
+    private void showAlertDialog(AlertDialog.Builder dialogBuilder){
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
 
     @Override

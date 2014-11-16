@@ -1,5 +1,7 @@
 package swiatowski.piotr.bibliotekapwr.db.table;
 
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * Created by Piotrek on 2014-11-02.
  */
@@ -14,7 +16,7 @@ public class LibraryTable {
         public static final String LIBRARY_LATITIUDE = "libraryLatitiude";
         public static final String LIBRARY_LONGITIUDE = "libraryLongitiude";
         public static final String LIBRARY_NAME = "libraryName";
-        public static final String LIBRARY_SHORT_NAME = "libraryShortName";
+        public static final String LIBRARY_ADDRESS = "libraryAddress";
         public static final String LIBRARY_BUILDING = "libraryBuilding";
         public static final String LIBRARY_START_TIME = "libraryStartTime";
         public static final String LIBRARY_CLOSE_TIME = "libraryCloseTime";
@@ -25,7 +27,7 @@ public class LibraryTable {
         public static final int LIBRARY_LATITIUDE  = 1;
         public static final int LIBRARY_LONGITIUDE = 2;
         public static final int LIBRARY_NAME = 3;
-        public static final int LIBRARY_SHORT_NAME = 4;
+        public static final int LIBRARY_ADDRESS = 4;
         public static final int LIBRARY_BUILDING = 5;
         public static final int LIBRARY_START_TIME = 6;
         public static final int LIBRARY_CLOSE_TIME = 7;
@@ -36,11 +38,34 @@ public class LibraryTable {
             Column.LIBRARY_LATITIUDE,
             Column.LIBRARY_LONGITIUDE,
             Column.LIBRARY_NAME,
-            Column.LIBRARY_SHORT_NAME,
+            Column.LIBRARY_ADDRESS,
             Column.LIBRARY_BUILDING,
             Column.LIBRARY_START_TIME,
             Column.LIBRARY_CLOSE_TIME
     };
+
+    public static void createTable(SQLiteDatabase db) {
+        String sql = String.format("CREATE TABLE IF NOT EXISTS %s (" +
+                        "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT)",
+                TABLE_NAME,
+                Column.LIBRARY_ID,
+                Column.LIBRARY_LATITIUDE,
+                Column.LIBRARY_LONGITIUDE,
+                Column.LIBRARY_NAME,
+                Column.LIBRARY_ADDRESS,
+                Column.LIBRARY_BUILDING,
+                Column.LIBRARY_START_TIME,
+                Column.LIBRARY_CLOSE_TIME);
+
+        db.execSQL(sql);
+    }
 
 }
 

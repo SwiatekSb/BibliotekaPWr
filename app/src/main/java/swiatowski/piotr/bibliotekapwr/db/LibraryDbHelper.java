@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import swiatowski.piotr.bibliotekapwr.db.table.LibraryTable;
+import swiatowski.piotr.bibliotekapwr.db.table.NotificationTable;
+
 /**
  * Created by Piotrek on 2014-11-02.
  */
@@ -91,6 +94,8 @@ public class LibraryDbHelper extends SQLiteOpenHelper {
 
         mDatabase = mContext.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Log.d("doszlo", " try create");
+        NotificationTable.createTable(mDatabase);
+        LibraryTable.createTable(mDatabase);
 //        WordsPackages.createTable(mDatabase);
 //        Translations.createTable(mDatabase);
 //        FlipBoards.createTable(mDatabase);

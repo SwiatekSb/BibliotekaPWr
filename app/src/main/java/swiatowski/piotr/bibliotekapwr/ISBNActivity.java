@@ -2,20 +2,20 @@ package swiatowski.piotr.bibliotekapwr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 
 import roboguice.activity.RoboActivity;
-import roboguice.inject.ContentView;
 
 /**
  * Created by Piotrek on 2014-11-01.
+ *
  */
 public class ISBNActivity extends RoboActivity {
 
     private void setUpView() {
+
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+      //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
         startActivityForResult(intent, 0);
     }
@@ -34,17 +34,30 @@ public class ISBNActivity extends RoboActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+       // super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
-
+            Log.d("doszlos", "znalezione ");
                 Intent bookListActivity = new Intent(this, BookListActivity.class);
                 bookListActivity.putExtra(BundleConstants.SEARCH_VALUE, contents);
                 startActivity(bookListActivity);
-            } else if (resultCode == RESULT_CANCELED) {
-                Log.i("App", "Scan unsuccessful");
+            } else if (resultCode == 0) {
+                Log.d("doszlos", "Scan unsuccessful");
+                onBackPressed();
+                finish();
+
             }
+        } else {
+            finish();
         }
+
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dip"
+    android:orientation="horizontal"
+    android:background="@drawable/myshape" >
+
+    <Button
+        android:id="@+id/btnSearchWidget"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:text="Szukaj" />
+
+    <Button
+        android:id="@+id/btnNotifWidget"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:text="Powiadomienia" />
+
+
+</LinearLayout>
