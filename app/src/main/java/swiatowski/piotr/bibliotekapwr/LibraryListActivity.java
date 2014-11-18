@@ -41,6 +41,7 @@ public class LibraryListActivity extends RoboActivity {
     @InjectView(R.id.btnMore)
     private Button mBtnMore;
 
+
     private void setUpView() {
         mLibrariesList = mLibraryDataSource.getAll();
 
@@ -65,15 +66,15 @@ public class LibraryListActivity extends RoboActivity {
    // A-1 : Lat: 51.107350  Lon:17.061911
            // * D-21 Lat: 51.109756   Lon:17.058116
             //* D-1:  Lat: 51.110411  Lon: 17.058133
-            * D-2  Lat: 51.110196  Lon: 17.057371
-            * A-3:  Lat: 51.108058  Lon: 17.064023
+           // * D-2  Lat: 51.110196  Lon: 17.057371
+           // * A-3:  Lat: 51.108058  Lon: 17.064023
            // * D-20: Lat: 51.110654   Lon: 17.059496
-            * B-4   Lat: 51.108324  Lon: 17.065026
-            * C-6  Lat: 51.108443   Lon:17.060628
-            * C-3 Lat: 51.108967  Lon:17.060236
-            * C-5: Lat: 51.109448   Lon: 17.058959
-            * H-4 Lat: 51.108853  Lon: 17.054491
-            * L-1  Lat: 51.104533   Lon: 17.054287
+           // * B-4   Lat: 51.108324  Lon: 17.065026
+            //* C-6  Lat: 51.108443   Lon:17.060628
+            //* C-3 Lat: 51.108967  Lon:17.060236
+            //* C-5: Lat: 51.109448   Lon: 17.058959
+            //* H-4 Lat: 51.108853  Lon: 17.054491
+           // * L-1  Lat: 51.104533   Lon: 17.054287
            // * E-1 i  E-4  Lat: 51.119145  Lon: 17.054371
 
     private void addDataToDataBase() {
@@ -83,7 +84,28 @@ public class LibraryListActivity extends RoboActivity {
         LibraryEntity d20 = new LibraryEntity(51.110654f, 17.059496f, "OCW Elektrycznego", "ul. Janiszewskiego 8" , "D-20", "pn-pt 9:00", "pn-cz 17:00; pt 15:00");
         LibraryEntity e4 = new LibraryEntity(51.119145f,17.054371f, "OCW Architektury", "ul. B.Prusa 53/55", "E-4, E-1", "pn-pt 9:00", "pn,wt,cz,pt 15:00; sr 17:00");
         LibraryEntity d1 = new LibraryEntity(51.110411f,17.058133f, "OCW Budownictwa Lądowego i Wodnego", "pl. Grunwaldzki 13", "D-1", "pn-pt 9:00", "pn,pt 15:00; wt,sr,cz 17:00");
+        LibraryEntity c3 = new LibraryEntity(51.108967f, 17.060236f, "OCW Elektroniki", "ul. Janiszewskiego 11/17", "C-3", "pn-pt 9:00", "pn-cz 17:00; pt 15:00");
+        LibraryEntity c5 = new LibraryEntity(51.109448f,17.058959f, "OCW Elektroniki C5","ul. Janiszewskiego 9", "C-5",  "pn-pt 9:00", "pn-cz 17:00; pt 15:00");
+        LibraryEntity c6= new LibraryEntity(51.108443f, 17.060628f, "OCW Elektroniki C6", "ul. Norwida 4/6", "C-6" , "pn-pt 9:00", "pn-cz 17:00; pt 15:00");
+        LibraryEntity d2 = new LibraryEntity(51.110196f, 17.057371f, "OCW Inżynierii Środowiska","pl. Grunwaldzki 9", "D-2","pn-pt 9:00", "pn-pt 15:00");
+        LibraryEntity l1 = new LibraryEntity(51.104533f,17.054287f, "OCW Geoinżynierii","ul. Na Grobli 15", "L-1", "pn-pt 9:00", "pn-cz 16:00; pt 15:00");
+        LibraryEntity b4 = new LibraryEntity(51.108324f, 17.065026f, "OCW Informatyki i Zarządzania","ul. Łukasiewicza 5", "B-4",  "pn-pt 9:00", "pn-cz 18:00; pt 15:00" );
+        LibraryEntity h4 = new LibraryEntity(51.108853f,17.054491f, "OCW Języków Obcych","Wyb. Wyspiańskiego 8", "H-4","pn-pt 9:00", "pn-cz 17:00; pt 16:00"  );
 
+
+
+        mLibraryDataSource.insert(a1);
+        mLibraryDataSource.insert(d20);
+        mLibraryDataSource.insert(czyt);
+        mLibraryDataSource.insert(e4);
+        mLibraryDataSource.insert(d1);
+        mLibraryDataSource.insert(c3);
+        mLibraryDataSource.insert(c5);
+        mLibraryDataSource.insert(c6);
+        mLibraryDataSource.insert(d2);
+        mLibraryDataSource.insert(l1);
+        mLibraryDataSource.insert(b4);
+        mLibraryDataSource.insert(h4);
     }
 
 
@@ -91,7 +113,7 @@ public class LibraryListActivity extends RoboActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addDataToDataBase();
+      //  addDataToDataBase();
         setUpView();
 
         setUpListeners();

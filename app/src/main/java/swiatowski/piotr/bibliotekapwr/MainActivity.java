@@ -46,7 +46,8 @@ public class MainActivity extends RoboActivity {
         mBtnInformationActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intentLibrary = new Intent(getApplicationContext(), LibraryListActivity.class);
+                startActivity(intentLibrary);
             }
         });
 

@@ -37,8 +37,12 @@ public class NotificationDataSource {
         notificationHref = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_HREF);
         notificationRentUrl = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_RENT_URL);
         notificationTitle = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_TITLE);
+        notificationId = Integer.parseInt(cursor.getString(NotificationTable.ColumnID.NOTIFICATION_ID));
+        NotificationEntity entity = new NotificationEntity(notificationSignature, notificationHref, notificationRentUrl, notificationTitle);
 
-        return new NotificationEntity(notificationSignature, notificationHref, notificationRentUrl, notificationTitle);
+        entity.setId(notificationId);
+
+        return entity;
     }
 
     public void insert(NotificationEntity notificationEntity) {

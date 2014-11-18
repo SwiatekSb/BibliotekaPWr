@@ -1,6 +1,8 @@
 package swiatowski.piotr.bibliotekapwr;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -55,9 +57,41 @@ public class NotificationListActivity extends RoboActivity {
         mBookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                alertDelete("Powiadomienie", i);
             }
         });
+    }
+
+    public void alertDelete(String title, final int i) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(NotificationListActivity.this);
+
+        dialogBuilder.setTitle(title);
+        dialogBuilder.setMessage("Czy chcesz usunąć powiadomienie ?");
+        dialogBuilder.setNegativeButton("Usuń", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mNotificationDataSource.remove(mNotifications.get(i).getId());
+                mNotifications.remove(i);
+                mBookAdapter.refill(mNotifications);
+                dialog.dismiss();
+            }
+        });
+        dialogBuilder.setPositiveButton("Cofnij", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        showAlertDialog(dialogBuilder);
+
+    }
+
+    private void showAlertDialog(AlertDialog.Builder dialogBuilder){
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
 
 

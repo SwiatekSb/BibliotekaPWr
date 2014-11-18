@@ -76,6 +76,23 @@ public class LibraryDataSource {
         }
     }
 
+    public LibraryEntity get(String name) {
+        String where = String.format("%s = %d", LibraryTable.Column.LIBRARY_NAME, name);
+        Cursor cursor = mDatabase.query(LibraryTable.TABLE_NAME, LibraryTable.ALL_COLUMNS, where, null,
+                null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            LibraryEntity library = cursorToWord(cursor);
+            cursor.close();
+
+            return library;
+        } else {
+            cursor.close();
+            return null;
+        }
+    }
+
     public List<LibraryEntity> getAll() {
         List<LibraryEntity> libraries = new LinkedList<LibraryEntity>();
 

@@ -26,7 +26,9 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.db.LibraryDataSource;
 import swiatowski.piotr.bibliotekapwr.db.NotificationDataSource;
+import swiatowski.piotr.bibliotekapwr.db.entity.LibraryEntity;
 import swiatowski.piotr.bibliotekapwr.db.entity.NotificationEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
@@ -48,6 +50,9 @@ public class RentInfoActivity extends RoboActivity {
 
     @Inject
     private NotificationDataSource notificationDataSource;
+
+    @Inject
+    private LibraryDataSource mLibraryDataSource;
 
     private BookRow mBookRow;
     private String selected;
@@ -94,7 +99,11 @@ public class RentInfoActivity extends RoboActivity {
         mBtnNavigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(intentForMaps("test", "51.107350", "17.061911"));
+                String nameLib = mLibraryBook.getName();
+                String[] tab = nameLib.split("\\(");
+                LibraryEntity entity = mLibraryDataSource.get(tab[0] + "");
+                if (entity != null)
+                     startActivity(intentForMaps(entity.getName(), String.valueOf(entity.getLatitiude()), String.valueOf(entity.getLongitiure())));
             }
         });
     }
