@@ -1,6 +1,5 @@
 package swiatowski.piotr.bibliotekapwr.parserHTML;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
@@ -11,7 +10,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiatowski.piotr.bibliotekapwr.BookRow;
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.LibraryBook;
 import swiatowski.piotr.bibliotekapwr.Page;
 import swiatowski.piotr.bibliotekapwr.Rent;
@@ -65,7 +64,7 @@ public class ParseURL  {
         return rentList;
     }
 
-    public BookRow parseUrlInfo(String string) {
+    public BookEntity parseUrlInfo(String string) {
         String type = "";
         String institute = "";
         String title = "";
@@ -81,11 +80,11 @@ public class ParseURL  {
             t.printStackTrace();
         }
 
-        return new BookRow(type, institute, title, year, isbn);
+        return new BookEntity(type, institute, title, year, isbn);
     }
 
     public Page parseUrl(String... strings) {
-        List<BookRow> boooks = new ArrayList<BookRow>();
+        List<BookEntity> boooks = new ArrayList<BookEntity>();
         String nextPage = "";
         boolean ne = false;
         String previousPage = "";
@@ -118,7 +117,7 @@ public class ParseURL  {
         return new Page(boooks, nextPage, previousPage, prev, ne);
     }
 
-    private BookRow getBookRowData(Element e) {
+    private BookEntity getBookRowData(Element e) {
 
         Elements td = e.getElementsByTag("td");
         String href = getInfoHref(td.get(0));
@@ -127,7 +126,7 @@ public class ParseURL  {
         String year = getText(td.get(4));
         List<LibraryBook> libraryBookList = getLibraryInfo(td.get(5));
 
-        return new BookRow(href, author, titleBook, year, libraryBookList);
+        return new BookEntity(href, author, titleBook, year, libraryBookList);
     }
 
     private List<LibraryBook> getLibraryInfo(Element element) {

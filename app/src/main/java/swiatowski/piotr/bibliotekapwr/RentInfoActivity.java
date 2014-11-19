@@ -26,8 +26,10 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.db.BookDataSource;
 import swiatowski.piotr.bibliotekapwr.db.LibraryDataSource;
 import swiatowski.piotr.bibliotekapwr.db.NotificationDataSource;
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.db.entity.LibraryEntity;
 import swiatowski.piotr.bibliotekapwr.db.entity.NotificationEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
@@ -50,11 +52,13 @@ public class RentInfoActivity extends RoboActivity {
 
     @Inject
     private NotificationDataSource notificationDataSource;
+    @Inject
+    private BookDataSource mBookDataSource;
 
     @Inject
     private LibraryDataSource mLibraryDataSource;
 
-    private BookRow mBookRow;
+    private BookEntity mBookRow;
     private String selected;
     private LibraryBook mLibraryBook;
 
@@ -70,7 +74,7 @@ public class RentInfoActivity extends RoboActivity {
     private void getData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mBookRow = (BookRow) extras.getSerializable(BundleConstants.BOOK_ROW);
+            mBookRow = (BookEntity) extras.getSerializable(BundleConstants.BOOK_ROW);
             selected = extras.getString(BundleConstants.SELECTED_ROW);
         }
     }
@@ -216,7 +220,8 @@ public class RentInfoActivity extends RoboActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //add book to database
-
+                mBookDataSource.insert(mBookRow);
+                dialog.dismiss();
             }
         });
         dialogBuilder.setPositiveButton("Cofnij", new DialogInterface.OnClickListener() {
@@ -301,7 +306,7 @@ public class RentInfoActivity extends RoboActivity {
         }
 
         // create method refill to notyfiydatachange
-        public void refill(List<BookRow> lists) {
+        public void refill(List<BookEntity> lists) {
 //            mRestaurants.clear();
          //   mRestaurants.addAll(lists);
             Log.d("doszlo", lists.size() + "   w refil");

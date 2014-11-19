@@ -3,18 +3,20 @@ package swiatowski.piotr.bibliotekapwr;
 import java.io.Serializable;
 import java.util.List;
 
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
+
 /**
  * Created by Piotrek on 2014-11-02.
  */
 public class Page implements Serializable{
 
-    private List<BookRow> mBookList;
+    private List<BookEntity> mBookList;
     private String mNextPage;
     private String mPreviousPage;
     private boolean mIsPrevious;
     private boolean mIsNext;
 
-    public Page(List<BookRow> bookList, String nextPage, String previousPage, boolean isPrevious, boolean isNext) {
+    public Page(List<BookEntity> bookList, String nextPage, String previousPage, boolean isPrevious, boolean isNext) {
         mBookList = bookList;
         mNextPage = nextPage;
         mPreviousPage = previousPage;
@@ -22,7 +24,7 @@ public class Page implements Serializable{
         mIsNext = isNext;
     }
 
-    public List<BookRow> getBookList() {
+    public List<BookEntity> getBookList() {
         return mBookList;
     }
 

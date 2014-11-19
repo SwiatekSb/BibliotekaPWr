@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import swiatowski.piotr.bibliotekapwr.db.table.BookTable;
 import swiatowski.piotr.bibliotekapwr.db.table.LibraryTable;
 import swiatowski.piotr.bibliotekapwr.db.table.NotificationTable;
 
@@ -96,6 +97,7 @@ public class LibraryDbHelper extends SQLiteOpenHelper {
         Log.d("doszlo", " try create");
         NotificationTable.createTable(mDatabase);
         LibraryTable.createTable(mDatabase);
+        BookTable.createTable(mDatabase);
 //        WordsPackages.createTable(mDatabase);
 //        Translations.createTable(mDatabase);
 //        FlipBoards.createTable(mDatabase);

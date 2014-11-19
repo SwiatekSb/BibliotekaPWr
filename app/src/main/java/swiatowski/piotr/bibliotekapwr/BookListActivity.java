@@ -23,6 +23,7 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.HtmlConstants;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
@@ -34,7 +35,7 @@ import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 public class BookListActivity extends RoboActivity {
 
     private String mSearchWord;
-    private List<BookRow> mBooks;
+    private List<BookEntity> mBooks;
     private BookAdapter mBookAdapter;
 
     private ProgressDialog mProgressDialog;
@@ -103,7 +104,7 @@ public class BookListActivity extends RoboActivity {
     }
 
     private void setUpView() {
-        mBooks = new ArrayList<BookRow>();
+        mBooks = new ArrayList<BookEntity>();
         mBookAdapter = new BookAdapter(this,
                 R.layout.row_book_information, mBooks);
         mBookList.setAdapter(mBookAdapter);
@@ -147,18 +148,18 @@ public class BookListActivity extends RoboActivity {
     /**
      * This Adapter is used to show Books.
      */
-    private static class BookAdapter extends ArrayAdapter<BookRow> {
+    private static class BookAdapter extends ArrayAdapter<BookEntity> {
 
         private Activity mContext;
-        private List<BookRow> mBookRowList;
+        private List<BookEntity> mBookRowList;
         private int mLayoutResourceId;
         private Handler uiHandler = new Handler();
 
         public BookAdapter(Activity context, int layoutResourceId,
-                           List<BookRow> bookRowList) {
+                           List<BookEntity> bookRowList) {
             super(context, layoutResourceId, bookRowList);
             mContext = context;
-            mBookRowList = new ArrayList<BookRow>();
+            mBookRowList = new ArrayList<BookEntity>();
             mLayoutResourceId = layoutResourceId;
         }
 
@@ -193,7 +194,7 @@ public class BookListActivity extends RoboActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            final BookRow bookRow = mBookRowList.get(position);
+            final BookEntity bookRow = mBookRowList.get(position);
             String[] names = bookRow.getListOfLibraryName();
 
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, names); //selected item will look like a spinner set from XML
@@ -226,7 +227,7 @@ public class BookListActivity extends RoboActivity {
             return convertView;
         }
 
-        public void refill(List<BookRow> lists) {
+        public void refill(List<BookEntity> lists) {
             mBookRowList.addAll(lists);
             uiHandler.post(new Runnable() {
                 @Override

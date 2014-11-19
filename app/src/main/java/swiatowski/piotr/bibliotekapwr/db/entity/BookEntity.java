@@ -1,13 +1,15 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.db.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import swiatowski.piotr.bibliotekapwr.LibraryBook;
+
 /**
  * Created by Piotrek on 2014-11-01.
  */
-public class BookRow implements Serializable {
+public class BookEntity implements Serializable {
 
     private String mInfoHref;
     private String mAuthor;
@@ -24,7 +26,7 @@ public class BookRow implements Serializable {
 
     private boolean mHasInfoData;
 
-    public BookRow(String documentType, String instituteName, String fullTitle, String fullYear, String isbn) {
+    public BookEntity(String documentType, String instituteName, String fullTitle, String fullYear, String isbn) {
         mDocumentType = documentType;
         mInstituteName = instituteName;
         mFullTitle = fullTitle;
@@ -33,7 +35,7 @@ public class BookRow implements Serializable {
         mHasInfoData = true;
     }
 
-    public BookRow(String infoHref, String author, String title, String year, List<LibraryBook> libraryList) {
+    public BookEntity(String infoHref, String author, String title, String year, List<LibraryBook> libraryList) {
         mInfoHref = infoHref;
         mAuthor = author;
         mTitle = title;

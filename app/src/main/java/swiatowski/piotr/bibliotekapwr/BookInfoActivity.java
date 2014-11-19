@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
 
 /**
@@ -34,19 +35,19 @@ public class BookInfoActivity extends RoboActivity {
 
     @Inject
     private ParseURL mParser;
-    private BookRow mBookRow;
+    private BookEntity mBookRow;
     private ProgressDialog mProgressDialog;
 
     private void getData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mBookRow = (BookRow) extras.getSerializable(BundleConstants.BOOK_ROW);
+            mBookRow = (BookEntity) extras.getSerializable(BundleConstants.BOOK_ROW);
         }
     }
 
     private class LoadInfoBooks extends AsyncTask<String, String, Void> {
 
-        private BookRow book;
+        private BookEntity book;
 
         @Override
         protected void onPreExecute() {
@@ -86,7 +87,7 @@ public class BookInfoActivity extends RoboActivity {
         }
     }
 
-    private void setBookInfo(BookRow bo) {
+    private void setBookInfo(BookEntity bo) {
 
         mBookRow.setDocumentType(bo.getDocumentType());
         mBookRow.setFullTitle(bo.getFullTitle());
