@@ -10,10 +10,10 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.LibraryBook;
 import swiatowski.piotr.bibliotekapwr.Page;
 import swiatowski.piotr.bibliotekapwr.Rent;
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 
 /**
  * Created by Piotrek on 2014-09-02.
@@ -25,6 +25,7 @@ public class ParseURL  {
         try {
             Document doc = Jsoup.connect(HtmlConstants.ALEPH_URL + infoBookHref).get();
             Elements line = doc.select("td[class=td1]");
+    Log.d("doszlo", "linee  " + line + "    doc  "  + doc);
 
             int i = 0;
             int m = 0;

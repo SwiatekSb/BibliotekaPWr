@@ -1,7 +1,9 @@
 package swiatowski.piotr.bibliotekapwr;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -112,8 +114,26 @@ public class LibraryListActivity extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences mShared = null;
+        boolean flag = false;
 
-      //  addDataToDataBase();
+        if (this != null) {
+            mShared = this.getSharedPreferences("swiatowski.piotr.bibliotekapwr.library",
+                    Context.MODE_PRIVATE);
+        }
+        if (mShared != null) {
+            flag = mShared.getBoolean("loadLib", false);
+        }
+
+        if (!flag) {
+            addDataToDataBase();
+            if (mShared != null) {
+                mShared.edit().putBoolean("loadLib", true).commit();
+            }
+        }
+
+
+
         setUpView();
 
         setUpListeners();

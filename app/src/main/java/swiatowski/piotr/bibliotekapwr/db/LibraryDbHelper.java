@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.google.inject.Singleton;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import swiatowski.piotr.bibliotekapwr.db.table.NotificationTable;
 /**
  * Created by Piotrek on 2014-11-02.
  */
+@Singleton
 public class LibraryDbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "libraryDb.sqlite";
@@ -98,10 +101,6 @@ public class LibraryDbHelper extends SQLiteOpenHelper {
         NotificationTable.createTable(mDatabase);
         LibraryTable.createTable(mDatabase);
         BookTable.createTable(mDatabase);
-//        WordsPackages.createTable(mDatabase);
-//        Translations.createTable(mDatabase);
-//        FlipBoards.createTable(mDatabase);
-//        UserProfileTable.createTable(mDatabase);
     }
 
     @Override

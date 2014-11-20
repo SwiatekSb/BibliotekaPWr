@@ -17,6 +17,7 @@ public class NotificationTable {
         public static final String NOTIFICATION_HREF = "notificationHref";
         public static final String NOTIFICATION_RENT_URL = "notificationRentUrl";
         public static final String NOTIFICATION_TITLE = "notificationTitle";
+        public static final String NOTIFICATION_DAY = "notificationDay";
     }
 
     public static final class ColumnID {
@@ -25,6 +26,7 @@ public class NotificationTable {
         public static final int NOTIFICATION_HREF = 2;
         public static final int NOTIFICATION_RENT_URL = 3;
         public static final int NOTIFICATION_TITLE = 4;
+        public static final int NOTIFICATION_DAY = 5;
     }
 
     public static final String[] ALL_COLUMNS = {
@@ -32,12 +34,14 @@ public class NotificationTable {
             Column.NOTIFICATION_SIGNATURE,
             Column.NOTIFICATION_HREF,
             Column.NOTIFICATION_RENT_URL,
-            Column.NOTIFICATION_TITLE
+            Column.NOTIFICATION_TITLE,
+            Column.NOTIFICATION_DAY
     };
 
     public static void createTable(SQLiteDatabase db) {
         String sql = String.format("CREATE TABLE IF NOT EXISTS %s (" +
                         "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "%s TEXT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
@@ -47,7 +51,8 @@ public class NotificationTable {
                 Column.NOTIFICATION_SIGNATURE,
                 Column.NOTIFICATION_HREF,
                 Column.NOTIFICATION_RENT_URL,
-                Column.NOTIFICATION_TITLE);
+                Column.NOTIFICATION_TITLE,
+                Column.NOTIFICATION_DAY);
 
         db.execSQL(sql);
     }

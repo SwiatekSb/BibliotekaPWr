@@ -23,20 +23,20 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-import swiatowski.piotr.bibliotekapwr.db.NotificationDataSource;
-import swiatowski.piotr.bibliotekapwr.db.entity.NotificationEntity;
+import swiatowski.piotr.bibliotekapwr.db.BookDataSource;
+import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 
 /**
- * Created by Piotrek on 2014-11-11.
+ * Created by Piotrek on 2014-11-20.
  */
 @ContentView(R.layout.activity_book_list)
-public class NotificationListActivity extends RoboActivity {
+public class FavouriteListActivity extends RoboActivity {
 
-    private List<NotificationEntity> mNotifications;
+    private List<BookEntity> mBooks;
     private NotificationAdapter mBookAdapter;
 
     @Inject
-    private NotificationDataSource mNotificationDataSource;
+    private BookDataSource mBookDataSOurce;
 
     @InjectView(R.id.lvBooks)
     private ListView mBookList;
@@ -45,12 +45,12 @@ public class NotificationListActivity extends RoboActivity {
     private Button mBtnMore;
 
     private void setUpView() {
-        mNotifications = mNotificationDataSource.getAll();
-        Log.d("doszlo", mNotifications.size() + "  size ");
+        mBooks = mBookDataSOurce.getAll();
+        Log.d("doszlo", mBooks.size() + "  size ");
 
 
         mBookAdapter = new NotificationAdapter(this,
-                R.layout.row_notification_book, mNotifications);
+                R.layout.row_notification_book, mBooks);
         mBookList.setAdapter(mBookAdapter);
 
         mBtnMore.setVisibility(View.GONE);
@@ -60,14 +60,14 @@ public class NotificationListActivity extends RoboActivity {
         mBookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                alertDelete("Powiadomienie", i);
+             //   alertDelete("Powiadomienie", i);
             }
         });
     }
 
     public void alertDelete(String title, final int i) {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(NotificationListActivity.this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FavouriteListActivity.this);
 
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage("Czy chcesz usunąć powiadomienie ?");
@@ -75,9 +75,8 @@ public class NotificationListActivity extends RoboActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mNotificationDataSource.remove(mNotifications.get(i).getId());
-                mNotifications.remove(i);
-                mBookAdapter.refill(mNotifications);
+
+                mBookAdapter.refill(mBooks);
                 dialog.dismiss();
             }
         });
@@ -106,15 +105,15 @@ public class NotificationListActivity extends RoboActivity {
         setUpListeners();
     }
 
-    private static class NotificationAdapter extends ArrayAdapter<NotificationEntity> {
+    private static class NotificationAdapter extends ArrayAdapter<BookEntity> {
 
         private Activity mContext;
-        private List<NotificationEntity> mNotificationList;
+        private List<BookEntity> mNotificationList;
         private int mLayoutResourceId;
         private Handler uiHandler = new Handler();
 
         public NotificationAdapter(Activity context, int layoutResourceId,
-                           List<NotificationEntity> bookRowList) {
+                                   List<BookEntity> bookRowList) {
             super(context, layoutResourceId, bookRowList);
             mContext = context;
             mNotificationList = bookRowList;
@@ -145,16 +144,16 @@ public class NotificationListActivity extends RoboActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            final NotificationEntity bookRow = mNotificationList.get(position);
-            Log.d("doszlo" , " titel "  + bookRow.getTitle() + " rte" + bookRow.getHref());
+            final BookEntity bookRow = mNotificationList.get(position);
+
             viewHolder.mTxtvTitle.setText(bookRow.getTitle() + "");
-            viewHolder.mTxtvSignature.setText(bookRow.getSignature() + "");
+            viewHolder.mTxtvSignature.setText(bookRow.getAuthor() + "");
 
             return convertView;
         }
 
-        public void refill(List<NotificationEntity> lists) {
-            mNotificationList = new ArrayList<NotificationEntity>();
+        public void refill(List<BookEntity> lists) {
+            mNotificationList = new ArrayList<BookEntity>();
             mNotificationList.addAll(lists);
 
             uiHandler.post(new Runnable() {

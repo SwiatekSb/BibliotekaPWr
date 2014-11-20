@@ -30,6 +30,14 @@ public class MyBookActivity extends RoboActivity{
                 startActivity(intentNotificationList);
             }
         });
+
+        mBtnFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(getApplicationContext(), FavouriteListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

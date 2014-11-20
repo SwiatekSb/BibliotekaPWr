@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import swiatowski.piotr.bibliotekapwr.LibraryBook;
 import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.db.table.BookTable;
@@ -19,6 +21,7 @@ import swiatowski.piotr.bibliotekapwr.db.table.BookTable;
 /**
  * Created by Piotrek on 2014-11-18.
  */
+@Singleton
 public class BookDataSource {
 
     private SQLiteDatabase mDatabase;

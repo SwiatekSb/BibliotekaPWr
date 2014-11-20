@@ -32,27 +32,31 @@ public class NotificationDataSource {
         int notificationId;
         String notificationSignature, notificationHref, notificationRentUrl, notificationTitle;
 
+
         //notificationId = cursor.getInt(NotificationTable.ColumnID.NOTIFICATION_ID);
         notificationSignature = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_SIGNATURE);
         notificationHref = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_HREF);
         notificationRentUrl = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_RENT_URL);
         notificationTitle = cursor.getString(NotificationTable.ColumnID.NOTIFICATION_TITLE);
         notificationId = Integer.parseInt(cursor.getString(NotificationTable.ColumnID.NOTIFICATION_ID));
+        int day = Integer.parseInt(cursor.getString(NotificationTable.ColumnID.NOTIFICATION_DAY));
         NotificationEntity entity = new NotificationEntity(notificationSignature, notificationHref, notificationRentUrl, notificationTitle);
 
         entity.setId(notificationId);
+        entity.setDay(day);
 
         return entity;
     }
 
     public void insert(NotificationEntity notificationEntity) {
         ContentValues values = new ContentValues();
-
        // values.put(NotificationTable.Column.NOTIFICATION_ID, notificationEntity.getId() > 0 ? notificationEntity.getId() : null);
         values.put(NotificationTable.Column.NOTIFICATION_SIGNATURE, notificationEntity.getSignature());
         values.put(NotificationTable.Column.NOTIFICATION_HREF, notificationEntity.getHref());
         values.put(NotificationTable.Column.NOTIFICATION_RENT_URL, notificationEntity.getRentUrl());
         values.put(NotificationTable.Column.NOTIFICATION_TITLE, notificationEntity.getTitle());
+        values.put(NotificationTable.Column.NOTIFICATION_DAY, 0);
+
 
         Log.d("doszlo", " insertt to ");
         mDatabase.insertWithOnConflict(NotificationTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -96,4 +100,11 @@ public class NotificationDataSource {
         mDatabase.delete(NotificationTable.TABLE_NAME, where, null);
     }
 
+    public void update(int day, int id) {
+        String where = String.format("%s = %d", NotificationTable.Column.NOTIFICATION_ID, id);
+        ContentValues values = new ContentValues();
+        // values.put(NotificationTable.Column.NOTIFICATION_ID, notificationEntity.getId() > 0 ? notificationEntity.getId() : null);
+        values.put(NotificationTable.Column.NOTIFICATION_DAY, day);
+        mDatabase.update(NotificationTable.TABLE_NAME, values, where,null );
+    }
 }

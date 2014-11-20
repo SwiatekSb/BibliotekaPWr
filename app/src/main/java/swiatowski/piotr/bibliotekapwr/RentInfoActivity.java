@@ -194,6 +194,7 @@ public class RentInfoActivity extends RoboActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.d("doszlo", " pokaaaa" + "  " +  mListRent.get(i).getHref() + "   " +mBookRow.getTitle()+ "");
             notificationDataSource.insert(new NotificationEntity(mListRent.get(i).getSignature(),mBookRow.getInfoHref(),linkToRent, mBookRow.getTitle()));
             dialog.dismiss();
             }
@@ -214,7 +215,7 @@ public class RentInfoActivity extends RoboActivity {
 
 
         dialogBuilder.setTitle(title);
-        dialogBuilder.setMessage("Czy chcesz dodać ksiazke do ulubionych ?");
+        dialogBuilder.setMessage("Czy chcesz dodać ksiazke do ulubionych ?")        ;
         dialogBuilder.setNegativeButton("Dodaj", new DialogInterface.OnClickListener() {
 
             @Override

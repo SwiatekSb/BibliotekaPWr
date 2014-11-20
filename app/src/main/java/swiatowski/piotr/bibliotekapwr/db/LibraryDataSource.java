@@ -11,12 +11,15 @@ import com.google.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import swiatowski.piotr.bibliotekapwr.db.entity.LibraryEntity;
 import swiatowski.piotr.bibliotekapwr.db.table.LibraryTable;
 
 /**
  * Created by Piotrek on 2014-11-16.
  */
+@Singleton
 public class LibraryDataSource {
 
 
@@ -30,6 +33,7 @@ public class LibraryDataSource {
     private LibraryEntity cursorToWord(Cursor cursor) {
         String libraryLatitude, libraryLongitude, libraryName, libraryAddress, libraryBuilding,
         libraryStartTime, libraryEndTIme;
+
 
         libraryLatitude = cursor.getString(LibraryTable.ColumnID.LIBRARY_LATITIUDE);
         libraryLongitude = cursor.getString(LibraryTable.ColumnID.LIBRARY_LONGITIUDE);
@@ -77,7 +81,7 @@ public class LibraryDataSource {
     }
 
     public LibraryEntity get(String name) {
-        String where = String.format("%s = %d", LibraryTable.Column.LIBRARY_NAME, name);
+        String where = String.format("%s = \"%s\"", LibraryTable.Column.LIBRARY_NAME, name);
         Cursor cursor = mDatabase.query(LibraryTable.TABLE_NAME, LibraryTable.ALL_COLUMNS, where, null,
                 null, null, null);
 
