@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.rent;
 
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -6,7 +6,9 @@ import android.webkit.WebView;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.R;
 import swiatowski.piotr.bibliotekapwr.parserHTML.HtmlConstants;
+import swiatowski.piotr.bibliotekapwr.utlis.BundleConstants;
 
 /**
  * Created by Piotrek on 2014-11-11.

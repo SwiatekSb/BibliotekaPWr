@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.model;
 
 import java.io.Serializable;
 

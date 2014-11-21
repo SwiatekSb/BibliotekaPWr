@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.rent;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,13 +26,17 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.R;
 import swiatowski.piotr.bibliotekapwr.db.BookDataSource;
 import swiatowski.piotr.bibliotekapwr.db.LibraryDataSource;
 import swiatowski.piotr.bibliotekapwr.db.NotificationDataSource;
 import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.db.entity.LibraryEntity;
 import swiatowski.piotr.bibliotekapwr.db.entity.NotificationEntity;
+import swiatowski.piotr.bibliotekapwr.model.LibraryBook;
+import swiatowski.piotr.bibliotekapwr.model.Rent;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
+import swiatowski.piotr.bibliotekapwr.utlis.BundleConstants;
 
 /**
  * Created by Piotrek on 2014-11-02.
@@ -195,7 +199,7 @@ public class RentInfoActivity extends RoboActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.d("doszlo", " pokaaaa" + "  " +  mListRent.get(i).getHref() + "   " +mBookRow.getTitle()+ "");
-            notificationDataSource.insert(new NotificationEntity(mListRent.get(i).getSignature(),mBookRow.getInfoHref(),linkToRent, mBookRow.getTitle()));
+            notificationDataSource.insert(new NotificationEntity(mListRent.get(i).getSignature(), mBookRow.getInfoHref(), linkToRent, mBookRow.getTitle()));
             dialog.dismiss();
             }
         });

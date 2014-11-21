@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.information;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,8 +22,11 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.R;
 import swiatowski.piotr.bibliotekapwr.db.LibraryDataSource;
 import swiatowski.piotr.bibliotekapwr.db.entity.LibraryEntity;
+import swiatowski.piotr.bibliotekapwr.information.LibraryInfoActivity;
+import swiatowski.piotr.bibliotekapwr.utlis.BundleConstants;
 
 /**
  * Created by Piotrek on 2014-11-16.

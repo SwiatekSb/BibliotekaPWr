@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import swiatowski.piotr.bibliotekapwr.LibraryBook;
+import swiatowski.piotr.bibliotekapwr.model.LibraryBook;
 import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.db.table.BookTable;
 

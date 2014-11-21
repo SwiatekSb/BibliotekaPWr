@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.favourite;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.R;
+import swiatowski.piotr.bibliotekapwr.notification.NotificationListActivity;
 
 /**
  * Created by Piotrek on 2014-11-11.

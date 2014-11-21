@@ -1,10 +1,12 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.scanner;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import roboguice.activity.RoboActivity;
+import swiatowski.piotr.bibliotekapwr.searcher.BookListActivity;
+import swiatowski.piotr.bibliotekapwr.utlis.BundleConstants;
 
 /**
  * Created by Piotrek on 2014-11-01.

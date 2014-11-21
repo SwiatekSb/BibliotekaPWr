@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.notification;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

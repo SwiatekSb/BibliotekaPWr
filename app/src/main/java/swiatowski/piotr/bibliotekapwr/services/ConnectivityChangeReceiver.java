@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import com.google.inject.Inject;
 
@@ -20,17 +19,12 @@ public class ConnectivityChangeReceiver extends RoboBroadcastReceiver{
     @Override
     protected void handleReceive(Context context, Intent intent) {
         NetworkInfo wifi = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobile = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-        if (wifi != null && mobile != null) {
-            if (wifi.isAvailable() || mobile.isAvailable()) {
-                Log.d("doszlo", "network is available, starting synchronization service");
-
+        if (wifi != null) {
+            if (wifi.isAvailable() ) {
                 Intent serviceIntent = new Intent(context, SynchronizationService.class);
                 context.startService(serviceIntent);
             }
-        } else {
-            Log.d("doszlo", "nulls");
         }
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiatowski.piotr.bibliotekapwr.LibraryBook;
+import swiatowski.piotr.bibliotekapwr.model.LibraryBook;
 
 /**
  * Created by Piotrek on 2014-11-01.

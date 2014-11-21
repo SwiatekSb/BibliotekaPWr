@@ -10,9 +10,9 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiatowski.piotr.bibliotekapwr.LibraryBook;
-import swiatowski.piotr.bibliotekapwr.Page;
-import swiatowski.piotr.bibliotekapwr.Rent;
+import swiatowski.piotr.bibliotekapwr.model.LibraryBook;
+import swiatowski.piotr.bibliotekapwr.model.Page;
+import swiatowski.piotr.bibliotekapwr.model.Rent;
 import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 
 /**

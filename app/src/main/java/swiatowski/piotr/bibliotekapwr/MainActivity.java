@@ -8,6 +8,10 @@ import android.widget.Button;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.favourite.MyBookActivity;
+import swiatowski.piotr.bibliotekapwr.information.LibraryListActivity;
+import swiatowski.piotr.bibliotekapwr.scanner.ISBNActivity;
+import swiatowski.piotr.bibliotekapwr.searcher.SearchActivity;
 
 /**
  * Created by Piotrek on 2014-11-01.

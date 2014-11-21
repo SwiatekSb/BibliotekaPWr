@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.utlis;
 
 /**
  * Created by Piotrek on 2014-11-02.

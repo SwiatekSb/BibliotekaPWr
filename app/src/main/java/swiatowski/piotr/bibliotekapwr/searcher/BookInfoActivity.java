@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.searcher;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -10,8 +10,10 @@ import com.google.inject.Inject;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+import swiatowski.piotr.bibliotekapwr.R;
 import swiatowski.piotr.bibliotekapwr.db.entity.BookEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.ParseURL;
+import swiatowski.piotr.bibliotekapwr.utlis.BundleConstants;
 
 /**
  * Created by Piotrek on 2014-11-02.

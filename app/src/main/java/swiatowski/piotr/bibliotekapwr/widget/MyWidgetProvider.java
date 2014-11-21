@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import swiatowski.piotr.bibliotekapwr.NotificationListActivity;
+import swiatowski.piotr.bibliotekapwr.notification.NotificationListActivity;
 import swiatowski.piotr.bibliotekapwr.R;
-import swiatowski.piotr.bibliotekapwr.SearchActivity;
+import swiatowski.piotr.bibliotekapwr.searcher.SearchActivity;
 
 /**
  * Created by Piotrek on 2014-11-11.

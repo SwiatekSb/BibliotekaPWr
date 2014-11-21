@@ -16,8 +16,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import roboguice.service.RoboService;
-import swiatowski.piotr.bibliotekapwr.BookListActivity;
-import swiatowski.piotr.bibliotekapwr.BundleConstants;
+import swiatowski.piotr.bibliotekapwr.searcher.BookListActivity;
+import swiatowski.piotr.bibliotekapwr.utlis.BundleConstants;
 import swiatowski.piotr.bibliotekapwr.db.NotificationDataSource;
 import swiatowski.piotr.bibliotekapwr.db.entity.NotificationEntity;
 import swiatowski.piotr.bibliotekapwr.parserHTML.HtmlConstants;
@@ -31,25 +31,15 @@ public class SynchronizationService extends RoboService {
     private NotificationDataSource mNotificationDataSource;
 
     private static final long NOTIFICATION_DOWNLOADER_TIMER = 1000 * 60 * 1; // [1 minute]
+    private Handler uiHandler = new Handler();
+
     @Inject
     private Timer mNotificationsTimer;
-
-    private static final int UPDATE_INTERVAL = 30; // [minutes]
-
-    private Handler uiHandler = new Handler();
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        BusProvider.getEventBus().register(this);
-        Log.d("doszlo", " chodzi sfewrewrrwerwe");
         setupNotificationsDownloaderTask();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        BusProvider.getEventBus().unregister(this);
     }
 
     private void setupNotificationsDownloaderTask() {
@@ -57,41 +47,27 @@ public class SynchronizationService extends RoboService {
         TimerTask notificationDownloaderTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("doszlo", " chodzi serviceeeee e e e e e  e  e");
-                List<NotificationEntity> notificationEntities = mNotificationDataSource.getAll();
-
-                for (final NotificationEntity noti: notificationEntities) {
-                    Date date = new Date();
-                    final int day = date.getDate();
-
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (noti.getDay() != day ) {
-                                alert("Ksiazka " + noti.getTitle() + " dostepna", noti.getSignature());
-                                mNotificationDataSource.update(noti.getDay(), noti.getId());
-                            }
-                        }
-                    });
-
-                }
-                //getAllNotifications();
+                checkNotification();
             }
         };
         mNotificationsTimer.schedule(notificationDownloaderTask, 0, NOTIFICATION_DOWNLOADER_TIMER);
     }
 
-    public void alert(String title, final String signature) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    public void alert(String title, String message, final String signature) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
         builder.setTitle(title);
-        builder.setMessage("Sprawdz lub usuń powiadomienie");
+        builder.setMessage(message);
         builder.setPositiveButton("Anuluj", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //Do something
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Sprawdź", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Zamów", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 final Intent bookListActivity = new Intent(getApplicationContext(), BookListActivity.class);
 
@@ -102,27 +78,35 @@ public class SynchronizationService extends RoboService {
                 dialog.dismiss();
             }
         });
-      //  Looper.prepare();
+
         AlertDialog alert = builder.create();
         alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alert.show();
-
     }
 
-    private void showAlertDialog(AlertDialog.Builder dialogBuilder){
+    private void checkNotification() {
+        List<NotificationEntity> notificationEntities = mNotificationDataSource.getAll();
 
+        for (final NotificationEntity noti : notificationEntities) {
+            Date date = new Date();
+            final int day = date.getDate();
 
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.show();
+            uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (noti.getDay() != day) {
+                        alert("Książka dostępna ", noti.getTitle() + "", noti.getSignature());
+                        mNotificationDataSource.update(noti.getDay(), noti.getId());
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("doszlo", " dasdasdasdasda");
         return super.onStartCommand(intent, flags, startId);
     }
-
 
     @Override
     public IBinder onBind(Intent intent) {

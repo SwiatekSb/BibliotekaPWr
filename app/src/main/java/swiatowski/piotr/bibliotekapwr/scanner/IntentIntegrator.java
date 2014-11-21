@@ -1,4 +1,4 @@
-package swiatowski.piotr.bibliotekapwr;
+package swiatowski.piotr.bibliotekapwr.scanner;
 
 /**
  * Created by Piotrek on 2014-11-16.
@@ -198,7 +198,7 @@ public final class IntentIntegrator {
      * {@link Activity#onActivityResult(int, int, Intent)} method.</p>
      *
      * @return null if the event handled here was not related to {@link IntentIntegrator}, or
-     *  else an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
+     *  else an {@link swiatowski.piotr.bibliotekapwr.scanner.IntentResult} containing the result of the scan. If the user cancelled scanning,
      *  the fields will be null.
      */
     public static IntentResult parseActivityResult(int requestCode, int resultCode, Intent intent) {
